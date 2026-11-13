@@ -211,7 +211,24 @@ fun PantallaResultados(
 
         Text("Deducciones por hijos: %.2f €".format(deducciones))
 
-       
+        HorizontalDivider(
+            modifier = Modifier.padding(vertical = 16.dp)
+        )
+
+        Text(
+            text = "Salario neto anual: %.2f €".format(salarioNeto),
+            style = MaterialTheme.typography.titleLarge,
+            fontWeight = FontWeight.Bold
+        )
+
+        Spacer(modifier = Modifier.height(12.dp))
+
+        Text(
+            text = "Salario neto por paga: %.2f €".format(netoPorPaga)
+        )
+
+        Spacer(modifier = Modifier.height(24.dp))
+
         Button(
             onClick = volver,
             modifier = Modifier.fillMaxWidth()
