@@ -199,7 +199,19 @@ fun PantallaResultados(
             fontWeight = FontWeight.Bold
         )
 
-      
+        Spacer(modifier = Modifier.height(20.dp))
+
+        Text("Trabajador: $nombre")
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        Text("Salario bruto anual: %.2f €".format(salario))
+
+        Text("Retención IRPF: %.2f €".format(retencion))
+
+        Text("Deducciones por hijos: %.2f €".format(deducciones))
+
+       
         Button(
             onClick = volver,
             modifier = Modifier.fillMaxWidth()
