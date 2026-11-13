@@ -49,7 +49,16 @@ fun CalculadoraSalario() {
     var irpf by remember { mutableStateOf("15") }
 
     MaterialTheme{
-
+        if (mostrarResultados){
+            PantallaResultados(
+                nombre = nombre,
+                salario = salario.toDoubleOrNull() ?: 0.0,
+                pagas = pagas.toIntOrNull() ?: 12,
+                hijos = hijos.toIntOrNull() ?: 0,
+                irpf = irpf.toDoubleOrNull()?:0.0,
+                volver = {mostrarResultados = false}
+            )
+        } else {
             PantallaDatos(
                 nombre = nombre,
                 cambiarNombre = { nombre = it },
@@ -64,7 +73,7 @@ fun CalculadoraSalario() {
                 calcular = { mostrarResultados = true }
             )
         }
-
+    }
 }
 @Composable
 fun PantallaDatos(
@@ -159,3 +168,35 @@ fun PantallaDatos(
     }
 }
 
+@Composable
+fun PantallaResultados(
+    nombre: String,
+    salario: Double,
+    pagas: Int,
+    hijos: Int,
+    irpf: Double,
+    volver: () -> Unit
+) {
+    val retencion = salario * irpf / 100
+    val deducciones = hijos * 100.0
+    val salarioNeto = salario - retencion - deducciones
+
+    val netoPorPaga = if (pagas > 0) {
+        salarioNeto / pagas
+    } else {
+        0.0
+    }
+
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .verticalScroll(rememberScrollState())
+            .padding(24.dp)
+    ) {
+        Text(
+            text = "Resultado del cálculo",
+            style = MaterialTheme.typography.headlineSmall,
+            fontWeight = FontWeight.Bold
+        )
+    }
+}
