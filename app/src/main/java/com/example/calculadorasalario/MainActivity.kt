@@ -312,10 +312,14 @@ fun PantallaResultados(
         )
 
         Spacer(modifier = Modifier.height(12.dp))
-
+        Text(
+            text = "Salario neto por mes: %.2f".format(salarioNeto/12),
+            fontWeight = FontWeight.SemiBold
+        )
         Text(
             text = "Salario neto por paga: %.2f €".format(netoPorPaga)
         )
+
 
         Spacer(modifier = Modifier.height(24.dp))
 
