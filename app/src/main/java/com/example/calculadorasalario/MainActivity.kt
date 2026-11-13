@@ -48,7 +48,7 @@ fun CalculadoraSalario() {
     var salario by remember { mutableStateOf("") } //"" guarda texto que puede cambiar
     var pagas by remember { mutableStateOf("12") }
     var discapacidad by remember { mutableStateOf("0") }
-    var estadoCivil by remember { mutableStateOf("") }
+    var estadoCivil by remember { mutableStateOf("Soltero") }
     var hijos by remember { mutableStateOf("0") }
     var irpf by remember { mutableStateOf("15") }
 
@@ -56,11 +56,15 @@ fun CalculadoraSalario() {
         if (mostrarResultados){
             PantallaResultados(
                 nombre = nombre,
+                edad = edad,
+                grupoProfesional = grupoProfesional,
                 salario = salario.toDoubleOrNull() ?: 0.0,
                 pagas = pagas.toIntOrNull() ?: 12,
+                discapacidad = discapacidad,
+                estadoCivil = estadoCivil,
                 hijos = hijos.toIntOrNull() ?: 0,
-                irpf = irpf.toDoubleOrNull()?:0.0,
-                volver = {mostrarResultados = false}
+                irpf = irpf.toDoubleOrNull() ?: 0.0,
+                volver = { mostrarResultados = false }
             )
         } else {
             PantallaDatos(
@@ -178,6 +182,27 @@ fun PantallaDatos(
         Spacer(modifier = Modifier.height(12.dp))
 
         OutlinedTextField(
+            value = discapacidad,
+            onValueChange = cambiarDiscapacidad,
+            label = { Text("Grado de discapacidad (%)") },
+            keyboardOptions = KeyboardOptions(
+                keyboardType = KeyboardType.Decimal
+            ),
+            modifier = Modifier.fillMaxWidth()
+        )
+
+        Spacer(modifier = Modifier.height(12.dp))
+
+        OutlinedTextField(
+            value = estadoCivil,
+            onValueChange = cambiarEstadoCivil,
+            label = { Text("Estado civil") },
+            modifier = Modifier.fillMaxWidth()
+        )
+
+        Spacer(modifier = Modifier.height(12.dp))
+
+        OutlinedTextField(
             value = hijos,
             onValueChange = cambiarHijos,
             label = { Text("Número de hijos")},
@@ -213,8 +238,12 @@ fun PantallaDatos(
 @Composable
 fun PantallaResultados(
     nombre: String,
+    edad: String,
+    grupoProfesional: String,
     salario: Double,
     pagas: Int,
+    discapacidad: String,
+    estadoCivil: String,
     hijos: Int,
     irpf: Double,
     volver: () -> Unit
@@ -242,16 +271,35 @@ fun PantallaResultados(
         )
 
         Spacer(modifier = Modifier.height(20.dp))
+        Text(
+            text = "Datos del Trabajador",
+            style = MaterialTheme.typography.titleMedium,
+            fontWeight = FontWeight.Bold
+        )
 
-        Text("Trabajador: $nombre")
+        Text("Nombre: $nombre")
+        Text("Edad: $edad años")
+        Text("Grupo profesional: $grupoProfesional")
+        Text("Estado civil: $estadoCivil")
+        Text("Grado de discapacidad: $discapacidad %")
+        Text("Número de hijos: $hijos")
 
-        Spacer(modifier = Modifier.height(16.dp))
+        HorizontalDivider(
+            modifier = Modifier.padding(vertical = 16.dp)
+        )
+
+        Text(
+            text = "Resultados económicos",
+            style = MaterialTheme.typography.titleMedium,
+            fontWeight = FontWeight.Bold
+        )
+
+        Spacer(modifier = Modifier.height(8.dp))
 
         Text("Salario bruto anual: %.2f €".format(salario))
-
+        Text("Número de pagas: $pagas")
         Text("Retención IRPF: %.2f €".format(retencion))
-
-        Text("Deducciones por hijos: %.2f €".format(deducciones))
+        Text("Deducciones: %.2f €".format(deducciones))
 
         HorizontalDivider(
             modifier = Modifier.padding(vertical = 16.dp)
