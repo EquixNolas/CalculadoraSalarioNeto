@@ -198,5 +198,13 @@ fun PantallaResultados(
             style = MaterialTheme.typography.headlineSmall,
             fontWeight = FontWeight.Bold
         )
+
+      
+        Button(
+            onClick = volver,
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Text("Volver")
+        }
     }
 }
