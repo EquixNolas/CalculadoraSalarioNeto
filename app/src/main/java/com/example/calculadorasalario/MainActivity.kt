@@ -43,8 +43,12 @@ fun CalculadoraSalario() {
     var mostrarResultados by remember { mutableStateOf(false) }
 
     var nombre by remember { mutableStateOf("") } //Recuerda el valor durante actualizacion de interfaz
+    var edad by remember { mutableStateOf("") }
+    var grupoProfesional by remember { mutableStateOf("") }
     var salario by remember { mutableStateOf("") } //"" guarda texto que puede cambiar
     var pagas by remember { mutableStateOf("12") }
+    var discapacidad by remember { mutableStateOf("0") }
+    var estadoCivil by remember { mutableStateOf("") }
     var hijos by remember { mutableStateOf("0") }
     var irpf by remember { mutableStateOf("15") }
 
@@ -62,10 +66,18 @@ fun CalculadoraSalario() {
             PantallaDatos(
                 nombre = nombre,
                 cambiarNombre = { nombre = it },
+                edad = edad,
+                cambiarEdad = {edad = it},
+                grupoProfesional = grupoProfesional,
+                cambiarGrupoProfesional = {grupoProfesional = it},
                 salario = salario,
                 cambiarSalario = { salario = it },
                 pagas = pagas,
                 cambiarPagas = { pagas = it },
+                discapacidad = discapacidad,
+                cambiarDiscapacidad = {discapacidad = it},
+                estadoCivil = estadoCivil,
+                cambiarEstadoCivil =  {estadoCivil = it},
                 hijos = hijos,
                 cambiarHijos = { hijos = it },
                 irpf = irpf,
@@ -117,6 +129,28 @@ fun PantallaDatos(
             label = { Text("Nombre del trabajador")},
             modifier = Modifier.fillMaxSize()
         )
+
+        Spacer(modifier = Modifier.height(12.dp))
+
+        OutlinedTextField(
+            value = edad,
+            onValueChange = cambiarEdad,
+            label = { Text("Edad") },
+            keyboardOptions = KeyboardOptions(
+                keyboardType = KeyboardType.Number
+            ),
+            modifier = Modifier.fillMaxWidth()
+        )
+
+        Spacer(modifier = Modifier.height(12.dp))
+
+        OutlinedTextField(
+            value = grupoProfesional,
+            onValueChange = cambiarGrupoProfesional,
+            label = { Text("Grupo profesional") },
+            modifier = Modifier.fillMaxWidth()
+        )
+
 
         Spacer(modifier = Modifier.height(12.dp))
 
